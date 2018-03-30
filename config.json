@@ -1,0 +1,9 @@
+{
+  "paths": {
+    "clientSecret": "auth-client-secret.json",
+    "token": "auth-token.json"
+  },
+  "calendarIds": [
+    "primary"
+  ]
+}

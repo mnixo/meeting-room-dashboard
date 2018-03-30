@@ -1,0 +1,10 @@
+{
+  "name": "meeting-room-dashboard",
+  "version": "0.0.1",
+  "author": "mnixo",
+  "repository": "https://github.com/mnixo/meeting-room-dashboard",
+  "license": "MIT",
+  "dependencies": {
+    "googleapis": "^27.0.0"
+  }
+}
