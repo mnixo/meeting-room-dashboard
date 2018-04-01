@@ -3,7 +3,10 @@
     "clientSecret": "auth-client-secret.json",
     "token": "auth-token.json"
   },
-  "calendarIds": [
-    "primary"
+  "calendars": [
+    {
+      "name": "Primary",
+      "id": "primary"
+    }
   ]
 }

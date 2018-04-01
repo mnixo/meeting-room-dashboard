@@ -5,6 +5,7 @@
   "repository": "https://github.com/mnixo/meeting-room-dashboard",
   "license": "MIT",
   "dependencies": {
+    "express": "^4.16.3",
     "googleapis": "^27.0.0"
   }
 }

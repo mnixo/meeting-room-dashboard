@@ -1,4 +1,5 @@
 const google = require('googleapis').google;
+const express = require('express');
 const utils = require('./utils.js');
 
 // load the config file
@@ -13,29 +14,37 @@ if (!auth) {
   return console.log('Could not get authenticated');
 }
 
-const calendar = google.calendar({ version: 'v3', auth });
-config.calendarIds.forEach(calendarId => {
-  calendar.events.list({
-    calendarId,
+// initialize the state
+let state = {};
+config.calendars.forEach(calendar => {
+  state[calendar.id] = {
+    name: calendar.name,
+    lastUpdated: null,
+    events: null
+  };
+});
+
+const googleCalendar = google.calendar({ version: 'v3', auth });
+config.calendars.forEach(calendar => {
+  googleCalendar.events.list({
+    calendarId: calendar.id,
     timeMin: (new Date()).toISOString(),
     maxResults: 10,
     singleEvents: true,
     orderBy: 'startTime',
     // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    timeZone: 'Europe/Lisbon',
-  }, (err, { data }) => {
-    if (err) {
-      return console.log('The API returned an error: ' + err);
+    timeZone: 'Etc/UTC',
+  }, function(error, response) {
+    state[calendar.id].lastUpdated = response.headers.date;
+    state[calendar.id].events = error ? null : response.data.items;
+    if (error) {
+      console.log('The Google Calendar API returned an error:\n' + error);
     }
-    const events = data.items;
-    if (events.length) {
-      console.log('Upcoming 10 events:');
-      events.map(event => {
-        const start = event.start.dateTime || event.start.date;
-        console.log(`${start} - ${event.summary}`);
-      });
-    } else {
-      console.log('No upcoming events found.');
-    }
-  });
+  }.bind(state).bind(calendar));
 });
+
+const app = express();
+app.get('/', (req, res) => {
+  res.send(state);
+});
+app.listen(3000);
