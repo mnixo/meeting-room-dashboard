@@ -2,27 +2,37 @@ const google = require('googleapis').google;
 const express = require('express');
 const utils = require('./utils.js');
 
+const port = 3000;
+
+utils.log('Starting server...');
+
 // load the config file
 const config = utils.getConfig();
 if (!config) {
-  return console.log('Could not find the config file');
+  return utils.log('Could not find the config file', 'red');
 }
 
 // get the authentication object
 const auth = utils.getAuthWithCredentials(config);
 if (!auth) {
-  return console.log('Could not get authenticated');
+  return utils.log('Could not get authenticated', 'red');
 }
 
 // initialize the state
 let state = {};
+if (config.calendars.length === 0) {
+  return utils.log('No calendars were configured', 'red');
+}
+utils.log('Initializing state with the calendars:');
 config.calendars.forEach(calendar => {
   state[calendar.id] = {
     name: calendar.name,
     lastUpdated: null,
     events: null
   };
+  utils.log(`- ${calendar.id} (${calendar.name})`);
 });
+
 
 const googleCalendar = google.calendar({ version: 'v3', auth });
 config.calendars.forEach(calendar => {
@@ -47,4 +57,5 @@ const app = express();
 app.get('/', (req, res) => {
   res.send(state);
 });
-app.listen(3000);
+app.listen(port);
+utils.log(`Listening to requests on port ${port}...`);

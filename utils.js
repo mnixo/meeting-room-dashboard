@@ -1,5 +1,7 @@
 const fs = require('fs');
 const OAuth2 = require('googleapis').google.auth.OAuth2;
+const dateFormat = require('dateformat');
+const chalk = require('chalk');
 
 module.exports = {
 
@@ -35,6 +37,12 @@ module.exports = {
     const auth = this.getAuth(clientSecret);
     auth.setCredentials(token);
     return auth;
+  },
+
+  log: function(message, color) {
+    const timeStamp = chalk.gray(`[${dateFormat(new Date(), 'yyyy-mm-dd hh:MM:ss')}]`);
+    let coloredMessage = chalk[color] ? chalk[color](message) : message;
+    console.log(`${timeStamp} ${coloredMessage}`);
   }
 
 };
