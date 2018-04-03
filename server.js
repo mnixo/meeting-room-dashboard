@@ -2,8 +2,6 @@ const google = require('googleapis').google;
 const express = require('express');
 const utils = require('./utils.js');
 
-const port = 3000;
-
 utils.log('Starting server...');
 
 // load the config file
@@ -33,29 +31,37 @@ config.calendars.forEach(calendar => {
   utils.log(`- ${calendar.id} (${calendar.name})`);
 });
 
-
+// declare google calendar API object
 const googleCalendar = google.calendar({ version: 'v3', auth });
-config.calendars.forEach(calendar => {
-  googleCalendar.events.list({
+const googleCalendarConfig = config.server.googleCalendarAPI;
+
+// function to fetch the events for a given calendar
+function fetchEventsForCalendar(calendar) {
+  googleCalendar.events.list(Object.assign({
     calendarId: calendar.id,
-    timeMin: (new Date()).toISOString(),
-    maxResults: 10,
-    singleEvents: true,
-    orderBy: 'startTime',
-    // https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-    timeZone: 'Etc/UTC',
-  }, function(error, response) {
+    timeMin: (new Date()).toISOString()
+  }, googleCalendarConfig), function(error, response) {
+    utils.log(`Response for calendar ${calendar.id} (${calendar.name})`, 'blue');
     state[calendar.id].lastUpdated = response.headers.date;
     state[calendar.id].events = error ? null : response.data.items;
     if (error) {
-      console.log('The Google Calendar API returned an error:\n' + error);
+      utils.log(`The Google Calendar API returned an error:\n${error}`, 'red');
     }
   }.bind(state).bind(calendar));
+}
+
+// schedule event fetching for each configured calendar
+config.calendars.forEach(calendar => {
+  const interval = config.server.requestInterval;
+  utils.log(`Scheduling event fetching for ${calendar.id} (${calendar.name}) every ${interval} seconds`, 'blue');
+  fetchEventsForCalendar(calendar);
+  setInterval(fetchEventsForCalendar, interval * 1000, calendar);
 });
 
 const app = express();
 app.get('/', (req, res) => {
+  utils.log(`Request for state from ${req.connection.remoteAddress}`, 'cyan');
   res.send(state);
 });
-app.listen(port);
-utils.log(`Listening to requests on port ${port}...`);
+app.listen(config.server.port);
+utils.log(`Listening to requests on port ${config.server.port}...`);

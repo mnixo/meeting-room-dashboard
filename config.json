@@ -1,12 +1,22 @@
 {
-  "paths": {
-    "clientSecret": "auth-client-secret.json",
-    "token": "auth-token.json"
-  },
   "calendars": [
     {
       "name": "Primary",
       "id": "primary"
     }
-  ]
+  ],
+  "paths": {
+    "clientSecret": "auth-client-secret.json",
+    "token": "auth-token.json"
+  },
+  "server": {
+    "port": 3000,
+    "requestInterval": 15,
+    "googleCalendarAPI": {
+      "maxResults": 2,
+      "orderBy": "startTime",
+      "singleEvents": true,
+      "timeZone": "Etc/UTC"
+    }
+  }
 }
