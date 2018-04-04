@@ -1,0 +1,91 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<dom-module id="mrd-room">
+  <template>
+    <style>
+      paper-card {
+        padding: 1em;
+        width: 100%;
+      }
+      paper-card > h3 {
+        margin: 0;
+      }
+      .room-busy {
+        background-color: #ef9a9a;
+      }
+      .room-free {
+        background-color: #a5d6a7;
+      }
+    </style>
+    <paper-card class$="[[_isBusyClass(_isBusy)]]">
+      <h3>[[data.name]] ([[_isBusyLabel(_isBusy)]])</h3>
+      <div>[[data.id]]</div>
+      <div>[[_lastSynced]]</div>
+      <div>[[_availability]]</div>
+    </paper-card>
+  </template>
+  <script>
+    class MRDRoom extends Polymer.Element {
+
+      static get is() {
+        return 'mrd-room';
+      }
+
+      static get properties() {
+        return {
+          data: {
+            type: Object,
+            observer: '_dataChanged'
+          },
+          _lastSynced: String,
+          _isBusy: Boolean,
+          _availability: String
+        };
+      }
+
+      _dataChanged() {
+        console.log(this.data);
+        if (!this.data) {
+          return;
+        }
+        this._computeLastUpdated();
+        this._computeAvailability();
+      }
+
+      _computeLastUpdated() {
+        const date = new Date(this.data.lastUpdated);
+        const synced = moment(date).fromNow();
+        const at = moment(date).format('MMMM Do YYYY, h:mm:ss a');
+        return this._lastSynced = `Last synced ${synced} (at ${at})`;
+      }
+
+      _isBusyLabel() {
+        return this._isBusy ? 'Busy' : 'Free';
+      }
+
+      _isBusyClass() {
+        console.log(this._isBusy);
+        return this._isBusy ? 'room-busy' : 'room-free';
+      }
+
+      _computeAvailability() {
+        const firstEvent = this.data.events[0];
+        this._isBusy = (new Date() - new Date(firstEvent.start.dateTime)) > 0;
+        let fromNow, at;
+        if (this._isBusy) {
+          const endDate = new Date(firstEvent.end.dateTime);
+          fromNow = `Free in ${moment(endDate).fromNow(true)}`;
+          at = moment(endDate).format('MMMM Do YYYY, h:mm a');
+        } else {
+          const startDate = new Date(firstEvent.start.dateTime);
+          fromNow = `Busy in ${moment(startDate).fromNow(true)}`;
+          at = moment(startDate).format('MMMM Do YYYY, h:mm a')
+        }
+        return this._availability = `${fromNow} (${at})`
+      }
+
+    }
+
+    window.customElements.define(MRDRoom.is, MRDRoom);
+  </script>
+</dom-module>

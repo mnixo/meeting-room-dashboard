@@ -1,0 +1,72 @@
+<link rel="import" href="bower_components/iron-ajax/iron-ajax.html">
+<link rel="import" href="bower_components/paper-card/paper-card.html">
+<link rel="import" href="bower_components/paper-styles/paper-styles.html">
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+<link rel="import" href="mrd-room.html">
+
+<dom-module id="mrd-app">
+  <template>
+    <style>
+      mrd-room {
+        display: flex;
+        margin-bottom: 0.5em;
+      }
+    </style>
+    <iron-ajax id="ajax"
+               auto
+               url="http://localhost:3000/"
+               last-response="{{data}}"
+               on-response="_onResponse"
+               handleAs="json">
+    </iron-ajax>
+    <template is="dom-repeat" items="[[_dataToRoomsData(data)]]" as="roomData">
+      <mrd-room data="[[roomData]]"></mrd-room>
+    </template>
+  </template>
+  <script>
+    class MRDApp extends Polymer.Element {
+
+      static get is() {
+        return 'mrd-app';
+      }
+
+      static get properties() {
+        return {
+          data: Object,
+          message: {
+            type: String,
+            value: 'mrd-app'
+          }
+        };
+      }
+
+      ready() {
+        super.ready();
+        setInterval(function() {
+          this.$.ajax.generateRequest();
+        }.bind(this), 10000);
+      }
+
+      _onResponse() {
+        // console.log(this.data);
+        console.log('got response');
+      }
+
+      _dataToRoomsData() {
+        if (!this.data) {
+          return [];
+        }
+        const a = Object.keys(this.data).map(roomId => {
+          return Object.assign({
+            id: roomId
+          }, this.data[roomId]);
+        });
+        console.log(a);
+        return a;
+      }
+
+    }
+
+    window.customElements.define(MRDApp.is, MRDApp);
+  </script>
+</dom-module>
