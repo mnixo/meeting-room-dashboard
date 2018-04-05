@@ -1,0 +1,65 @@
+<link rel="import" href="bower_components/polymer/polymer-element.html">
+
+<dom-module id="mrd-attendee">
+  <template>
+    <style>
+      .container {
+        display: flex;
+        align-items: center;
+        border: 1px solid #cfd8dc;
+        border-radius: 2em;
+      }
+      .container > span {
+        margin-left: 0.125em;
+        margin-right: 0.125em;
+      }
+    </style>
+    <div class="container">
+      <iron-icon icon="[[_computeIcon(attendee)]]"></iron-icon>
+      <span id="name">[[_computeName(attendee)]]</span>
+      <iron-icon icon="[[_computeStatus(attendee)]]"></iron-icon>
+    </div>
+  </template>
+  <script>
+    class MRDAttendee extends Polymer.Element {
+
+      static get is() {
+        return 'mrd-attendee';
+      }
+
+      static get properties() {
+        return {
+          attendee: Object
+        };
+      }
+
+      _computeIcon() {
+        if (!this.attendee) {
+          return null;
+        }
+        return this.attendee.resource ? 'room' : 'account-circle';
+      }
+
+      _computeName() {
+        if (!this.attendee) {
+          return null;
+        }
+        return this.attendee.displayName ? this.attendee.displayName : this.attendee.email;
+      }
+
+      _computeStatus() {
+        if (!this.attendee) {
+          return null;
+        }
+        const status = this.attendee.responseStatus;
+        if (status === 'accepted') {
+          return 'check';
+        }
+        return status === 'declined' ? 'close' : 'help-outline';
+      }
+
+    }
+
+    window.customElements.define(MRDAttendee.is, MRDAttendee);
+  </script>
+</dom-module>

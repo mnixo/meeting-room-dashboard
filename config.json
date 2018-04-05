@@ -1,8 +1,8 @@
 {
   "calendars": [
     {
-      "name": "Primary",
-      "id": "primary"
+      "id": "primary",
+      "name": "Primary"
     }
   ],
   "paths": {
@@ -11,9 +11,9 @@
   },
   "server": {
     "port": 3000,
-    "requestInterval": 15,
+    "requestInterval": 30,
     "googleCalendarAPI": {
-      "maxResults": 2,
+      "maxResults": 20,
       "orderBy": "startTime",
       "singleEvents": true,
       "timeZone": "Etc/UTC"
