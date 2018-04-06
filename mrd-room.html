@@ -83,15 +83,20 @@
 
       _computeBusy() {
         const firstEvent = this.data.events[0];
+        if (!firstEvent) {
+          return this._isBusy = false;
+        }
         this._isBusy = (new Date() - new Date(firstEvent.start.dateTime)) > 0;
       }
 
       _computeAvailability() {
         const firstEvent = this.data.events[0];
         let fromNow, at;
+        if (this._backToBackEvents.length === 0) {
+          return this._availability = 'No events';
+        }
         const endDate = new Date(this._backToBackEvents[this._backToBackEvents.length - 1].end.dateTime);
         if (this._isBusy) {
-          // const endDate = new Date(firstEvent.end.dateTime);
           fromNow = `Free in ${moment(endDate).fromNow(true)}`;
           at = moment(endDate).format('MMMM Do YYYY, h:mm a');
           return this._availability = `${fromNow} (${at})`;
