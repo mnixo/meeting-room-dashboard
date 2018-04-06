@@ -22,10 +22,7 @@ if (token) {
 
 // generate the authentication url so that the user can authenticate
 const auth = utils.getAuth(clientSecret);
-const authUrl = auth.generateAuthUrl({
-  access_type: 'offline',
-  scope: [ 'https://www.googleapis.com/auth/calendar.readonly' ],
-});
+const authUrl = auth.generateAuthUrl(config.server.auth);
 console.log(`Authorize this app by visiting this url:\n${authUrl}`);
 const rl = readline.createInterface({
   input: process.stdin,
