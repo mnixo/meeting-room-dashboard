@@ -13,8 +13,20 @@
         margin-left: 0.125em;
         margin-right: 0.125em;
       }
+      .status-accepted {
+        color: #1b5e20;
+        border-color: #1b5e20;
+      }
+      .status-declined {
+        color: #b71c1c;
+        border-color: #b71c1c;
+      }
+      .status-unknown {
+        color: #bdbdbd;
+        border-color: #bdbdbd;
+      }
     </style>
-    <div class="container">
+    <div class$="container [[_computeStyle(attendee)]]">
       <iron-icon icon="[[_computeIcon(attendee)]]"></iron-icon>
       <span id="name">[[_computeName(attendee)]]</span>
       <iron-icon icon="[[_computeStatus(attendee)]]"></iron-icon>
@@ -56,6 +68,17 @@
           return 'check';
         }
         return status === 'declined' ? 'close' : 'help-outline';
+      }
+
+      _computeStyle() {
+        if (!this.attendee) {
+          return null;
+        }
+        const status = this.attendee.responseStatus;
+        if (status === 'accepted') {
+          return 'status-accepted';
+        }
+        return status === 'declined' ? 'status-declined' : 'status-unknown';
       }
 
     }

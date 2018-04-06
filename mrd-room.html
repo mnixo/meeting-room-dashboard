@@ -89,18 +89,18 @@
       _computeAvailability() {
         const firstEvent = this.data.events[0];
         let fromNow, at;
+        const endDate = new Date(this._backToBackEvents[this._backToBackEvents.length - 1].end.dateTime);
         if (this._isBusy) {
-          const endDate = new Date(this._backToBackEvents[this._backToBackEvents.length - 1].end.dateTime);
           // const endDate = new Date(firstEvent.end.dateTime);
           fromNow = `Free in ${moment(endDate).fromNow(true)}`;
           at = moment(endDate).format('MMMM Do YYYY, h:mm a');
-          const during = moment(endDate).from(moment(this._backToBackEvents[0].start.dateTime), true);
-          return this._availability = `${fromNow} (${at}) for ${during}`;
+          return this._availability = `${fromNow} (${at})`;
         } else {
           const startDate = new Date(firstEvent.start.dateTime);
           fromNow = `Busy in ${moment(startDate).fromNow(true)}`;
           at = moment(startDate).format('MMMM Do YYYY, h:mm a');
-          return this._availability = `${fromNow} (${at})`;
+          const during = moment(endDate).from(moment(this._backToBackEvents[0].start.dateTime), true);
+          return this._availability = `${fromNow} (${at}) for ${during}`;
         }
       }
 
