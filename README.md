@@ -1,4 +1,10 @@
-### Setup the Client Secret file (`auth-client-secret.json`)
+#### Server
+
+###### 1. Install dependencies
+
+`npm install`
+
+###### 2. Setup the Client Secret file (`auth-client-secret.json`)
 
 Follow the ["Node.js Quickstart" guide from the Google Calendar API Documentation](https://developers.google.com/calendar/quickstart/nodejs):
 
@@ -11,6 +17,20 @@ Follow the ["Node.js Quickstart" guide from the Google Calendar API Documentatio
 7. Click the download JSON button to the right of the client ID.
 8. Move this file to this directory and rename it `auth-client-secret.json`.
 
-### Setup the Token file (`auth-token.json`)
+###### 3. Setup the Token file (`auth-token.json`)
 
-Run `node setup-token.js` and follow the instructions (requires the setup of the Client Secret file).
+`node setup-token.js` and follow the instructions (requires the setup of the Client Secret file).
+
+###### 4. Start the server
+
+`node server.js`
+
+#### Client
+
+###### 1. Install dependencies
+
+`bower install`
+
+###### 2. Start the client
+
+`polymer serve` and access the provided URL.
