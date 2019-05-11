@@ -1,11 +1,12 @@
 import { LitElement, html } from 'lit-element';
-import '@polymer/paper-button/paper-button';
+import { MRDStyles } from './mrd-styles';
 import './mrd-calendar-api';
 
 class MRDAuth extends LitElement {
 
   render() {
     return html`
+      ${MRDStyles.paperButton}
       <mrd-calendar-api
         id="calendarAPI"
         @signed-in="${this._onSignedIn}"
