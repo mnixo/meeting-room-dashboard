@@ -4,53 +4,82 @@ import './mrd-calendar-api';
 
 class MRDAuth extends LitElement {
 
+  static get properties() {
+    return {
+      _isLoading: Boolean,
+      _user: Object,
+    };
+  }
+
+  constructor() {
+    super();
+    this._isLoading = true;
+    this._user = null;
+  }
+
   render() {
     return html`
       ${MRDStyles.paperButton}
+      <style>
+        :host {
+          display: flex;
+        }
+      </style>
       <mrd-calendar-api
         id="calendarAPI"
         @signed-in="${this._onSignedIn}"
         @signed-out="${this._onSignedOut}"
-        @signing-in="${this._onSigningIn}"
-        @signing-out="${this._onSigningOut}"
-        @started-signed-in="${this._onStartedSignedIn}"
-        @started-signed-out="${this._onStartedSignedOut}">
+        @signing-in="${this._onSigningInOrOut}"
+        @signing-out="${this._onSigningInOrOut}"
+        @started-signed-in="${this._onSignedIn}"
+        @started-signed-out="${this._onSignedOut}">
       </mrd-calendar-api>
-      <paper-button raised @tap="${this._onSignIn}">sign in</paper-button>
-      <paper-button raised @tap="${this._onSignOut}">sign out</paper-button>
+      <paper-button
+        class="auth"
+        @tap="${this._onAuthButtonTap}"
+        raised>
+        ${this._renderAuthButtonContent(this._isLoading, this._user)}
+      </paper-button>
     `;
   }
 
-  _onSignIn() {
-    this.shadowRoot.getElementById('calendarAPI').signIn();
+  _renderAuthButtonContent(isLoading, user) {
+    if (isLoading) {
+      return html`
+        <paper-spinner active></paper-spinner>
+      `;
+    }
+    if (user) {
+      return html`
+        <iron-image src="${user.basicProfile.imageUrl}" sizing="contain"></iron-image>
+      `;
+    }
+    return html`
+      <iron-icon icon="account-box"></iron-icon>
+    `;
   }
 
-  _onSignOut() {
-    this.shadowRoot.getElementById('calendarAPI').signOut();
+  _onAuthButtonTap() {
+    if (this._isLoading) {
+      return;
+    }
+    return this._user ?
+      this.shadowRoot.getElementById('calendarAPI').signOut() :
+      this.shadowRoot.getElementById('calendarAPI').signIn();
   }
 
   _onSignedIn() {
-    console.log('signed in');
+    this._isLoading = false;
+    this._user = this.shadowRoot.getElementById('calendarAPI').getCurrentUser();
   }
 
   _onSignedOut() {
-    console.log('signed out');
+    this._isLoading = false;
+    this._user = null;
   }
 
-  _onSigningIn() {
-    console.log('signing in');
-  }
-
-  _onSigningOut() {
-    console.log('signing out');
-  }
-
-  _onStartedSignedIn() {
-    console.log('started signed in');
-  }
-
-  _onStartedSignedOut() {
-    console.log('started signed out')
+  _onSigningInOrOut() {
+    this._isLoading = true;
   }
 
 }
