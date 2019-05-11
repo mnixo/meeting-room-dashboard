@@ -1,8 +1,9 @@
-import { LitElement, html } from 'lit-element';
+import { html } from 'lit-element';
+import { MRDElement } from './mrd-element';
 import { MRDStyles } from './mrd-styles';
 import './mrd-calendar-api';
 
-class MRDAuth extends LitElement {
+class MRDAuth extends MRDElement {
 
   static get properties() {
     return {
@@ -63,14 +64,12 @@ class MRDAuth extends LitElement {
     if (this._isLoading) {
       return;
     }
-    return this._user ?
-      this.shadowRoot.getElementById('calendarAPI').signOut() :
-      this.shadowRoot.getElementById('calendarAPI').signIn();
+    return this._user ? this.getById('calendarAPI').signOut() : this.getById('calendarAPI').signIn();
   }
 
   _onSignedIn() {
     this._isLoading = false;
-    this._user = this.shadowRoot.getElementById('calendarAPI').getCurrentUser();
+    this._user = this.getById('calendarAPI').getCurrentUser();
   }
 
   _onSignedOut() {
