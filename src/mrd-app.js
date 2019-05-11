@@ -9,6 +9,7 @@ import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/paper-styles';
 import { MRDStyles } from './mrd-styles';
 import './mrd-auth';
+import './mrd-settings';
 
 class MRDApp extends LitElement {
 
@@ -18,6 +19,7 @@ class MRDApp extends LitElement {
       <app-header shadow>
         <app-toolbar>
           <span main-title>Meeting Room Dashboard</span>
+          <mrd-settings></mrd-settings>
           <mrd-auth></mrd-auth>
         </app-toolbar>
       </app-header>
