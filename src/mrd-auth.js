@@ -36,7 +36,7 @@ class MRDAuth extends MRDElement {
         @started-signed-out="${this._onSignedOut}">
       </mrd-calendar-api>
       <paper-button
-        class="auth"
+        class="toolbar"
         @tap="${this._onAuthButtonTap}"
         raised>
         ${this._renderAuthButtonContent(this._isLoading, this._user)}

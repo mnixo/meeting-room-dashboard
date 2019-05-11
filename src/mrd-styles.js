@@ -18,11 +18,11 @@ export class MRDStyles {
         paper-button {
           font-size: 16px;
         }
-        paper-button.auth {
+        paper-button.toolbar {
           padding: 0.5em;
           min-width: 0;
         }
-        paper-button.auth > * {
+        paper-button.toolbar > * {
           height: 2em;
           width: 2em;
         }
