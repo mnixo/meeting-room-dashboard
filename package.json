@@ -1,0 +1,18 @@
+{
+  "name": "meeting-room-dashboard",
+  "description": "Meeting Room Dashboard",
+  "version": "0.0.2",
+  "repository": "https://github.com/mnixo/meeting-room-dashboard",
+  "author": "Miguel Nixo <mnixo@nuxeo.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "./node_modules/polymer-cli/bin/polymer.js serve"
+  },
+  "devDependencies": {
+    "@webcomponents/webcomponentsjs": "^2.2.10",
+    "polymer-cli": "^1.9.9"
+  },
+  "dependencies": {
+    "lit-element": "^2.1.0"
+  }
+}
