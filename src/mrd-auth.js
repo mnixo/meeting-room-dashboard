@@ -1,6 +1,5 @@
 import { LitElement, html } from 'lit-element';
 import '@polymer/paper-button/paper-button';
-import '@polymer/paper-styles/paper-styles';
 import './mrd-calendar-api';
 
 class MRDAuth extends LitElement {
