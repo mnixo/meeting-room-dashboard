@@ -7,7 +7,6 @@ import '@polymer/iron-image/iron-image';
 import '@polymer/paper-button/paper-button';
 import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/paper-styles';
-import { MRDStyles } from './mrd-styles';
 import './mrd-auth';
 import './mrd-settings';
 
@@ -15,7 +14,11 @@ class MRDApp extends LitElement {
 
   render() {
     return html`
-      ${MRDStyles.appHeader}
+      <style>
+        app-header {
+          font-family: 'Roboto', 'Noto', sans-serif;
+        }
+      </style>
       <app-header shadow>
         <app-toolbar>
           <span main-title>Meeting Room Dashboard</span>
