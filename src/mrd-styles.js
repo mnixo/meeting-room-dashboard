@@ -7,6 +7,8 @@ export class MRDStyles {
       <style>
         paper-button {
           font-size: 16px;
+          padding: 0.6em;
+          text-transform: none;
         }
         paper-button.toolbar {
           padding: 0.5em;
@@ -15,6 +17,20 @@ export class MRDStyles {
         paper-button.toolbar > * {
           height: 2em;
           width: 2em;
+        }
+      </style>
+    `;
+  }
+
+  static get paperDialog() {
+    return html`
+      <style>
+        paper-dialog {
+          display: flex;
+          flex-direction: column;
+          width: 90vw;
+          height: 90vh;
+          padding: 0.5em;
         }
       </style>
     `;
