@@ -18,6 +18,8 @@
     "@polymer/iron-icons": "^3.0.1",
     "@polymer/iron-image": "^3.0.2",
     "@polymer/paper-button": "^3.0.1",
+    "@polymer/paper-dialog": "^3.0.1",
+    "@polymer/paper-input": "^3.0.2",
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "lit-element": "^2.1.0"

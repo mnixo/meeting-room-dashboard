@@ -1,7 +1,7 @@
 import { LitElement, html } from 'lit-element';
 import { MRDStyles } from './mrd-styles';
 
-class MRDSettings extends LitElement {
+class MRDSettingsButton extends LitElement {
 
   render() {
     return html`
@@ -11,12 +11,19 @@ class MRDSettings extends LitElement {
           display: flex;
         }
       </style>
-      <paper-button raised class="toolbar">
+      <paper-button
+        class="toolbar"
+        @tap="${this._onTap}"  
+        raised>
         <iron-icon icon="settings"></iron-icon>
       </paper-button>
     `;
   }
 
+  _onTap() {
+    this.dispatchEvent(new CustomEvent('tap'));
+  }
+
 }
 
-customElements.define('mrd-settings', MRDSettings);
+customElements.define('mrd-settings-button', MRDSettingsButton);
