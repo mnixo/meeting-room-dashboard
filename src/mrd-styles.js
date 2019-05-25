@@ -8,10 +8,12 @@ export class MRDStyles {
         paper-button {
           font-size: 16px;
           padding: 0.6em;
+          margin: 0;
           text-transform: none;
         }
         paper-button.toolbar {
           padding: 0.5em;
+          margin-left: 0.5em;
           min-width: 0;
         }
         paper-button.toolbar > * {
