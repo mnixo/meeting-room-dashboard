@@ -7,6 +7,7 @@ class MRDAuth extends MRDElement {
 
   static get properties() {
     return {
+      auth: Object,
       _isLoading: Boolean,
       _user: Object,
     };
@@ -14,6 +15,7 @@ class MRDAuth extends MRDElement {
 
   constructor() {
     super();
+    this.auth = null;
     this._isLoading = true;
     this._user = null;
   }
@@ -28,6 +30,7 @@ class MRDAuth extends MRDElement {
       </style>
       <mrd-calendar-api
         id="calendarAPI"
+        .auth="${this.auth}"
         @signed-in="${this._onSignedIn}"
         @signed-out="${this._onSignedOut}"
         @signing-in="${this._onSigningInOrOut}"

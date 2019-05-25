@@ -4,22 +4,13 @@ class MrdCalendarApi extends LitElement {
 
   static get properties() {
     return {
-      _auth: {
-        type: Object,
-      },
+      auth: Object,
     }
   }
 
   constructor() {
     super();
-    this._auth = {
-      apiKey: '',
-      clientId: '',
-      discoveryDocs: [
-        'https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest',
-      ],
-      scope: 'https://www.googleapis.com/auth/calendar.readonly',
-    };
+    this.auth = null;
   }
 
   render() {
@@ -28,8 +19,18 @@ class MrdCalendarApi extends LitElement {
 
   firstUpdated(_changedProperties) {
     super.firstUpdated(_changedProperties);
+    this.loadAuth();
+  }
+
+  updated(_changedProperties) {
+    if (_changedProperties.get('auth')) {
+      this.loadAuth();
+    }
+  }
+
+  loadAuth() {
     gapi.load('client:auth2', () => {
-      gapi.client.init(this._auth).then(() => {
+      gapi.client.init(this.auth).then(() => {
         gapi.auth2.getAuthInstance().isSignedIn.listen(isSignedIn => this._onSignedInChanged(isSignedIn));
         this._notifyStarted(gapi.auth2.getAuthInstance().isSignedIn.get());
       }, error => console.log(JSON.stringify(error, null, 2)));
