@@ -4,19 +4,6 @@ import { MRDStyles } from './mrd-styles';
 
 class MRDSettingsDialog extends MRDElement {
 
-  static get properties() {
-    return {
-      calendars: {
-        type: Array,
-      },
-    };
-  }
-
-  constructor() {
-    super();
-    this.calendars = [];
-  }
-
   render() {
     return html`
       ${MRDStyles.paperButton}
@@ -52,14 +39,15 @@ class MRDSettingsDialog extends MRDElement {
         <span>Settings</span>
         <textarea id="textArea" @keydown="${this._onTextAreaKeyDown}"></textarea>
         <div>
-          <paper-button raised>Cancel</paper-button>
-          <paper-button raised>Save</paper-button>
+          <paper-button raised dialog-dismiss>Cancel</paper-button>
+          <paper-button raised dialog-confirm @tap="${this._onSaveTap}">Save</paper-button>
         </div>
       </paper-dialog>
     `;
   }
 
   open() {
+    this.getById('textArea').value = localStorage.getItem('settings');
     this.getById('dialog').open();
   }
 
@@ -73,6 +61,12 @@ class MRDSettingsDialog extends MRDElement {
       textArea.value = value.substring(0, selectionStart) + '  ' + value.substring(selectionEnd);
       textArea.selectionStart = textArea.selectionEnd = selectionStart + 2;
     }
+  }
+
+  _onSaveTap() {
+    this.dispatchEvent(new CustomEvent('settings-changed', {
+      detail: this.getById('textArea').value,
+    }));
   }
 
 }

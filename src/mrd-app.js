@@ -16,6 +16,19 @@ import './mrd-settings-dialog';
 
 class MRDApp extends MRDElement {
 
+  static get properties() {
+    return {
+      _settings: {
+        type: Object,
+      },
+    };
+  }
+
+  constructor() {
+    super();
+    this._loadSettings();
+  }
+
   render() {
     return html`
       <style>
@@ -30,12 +43,30 @@ class MRDApp extends MRDElement {
           <mrd-auth></mrd-auth>
         </app-toolbar>
       </app-header>
-      <mrd-settings-dialog id="settings-dialog"></mrd-settings-dialog>
+      <mrd-settings-dialog
+        id="settings-dialog"
+        @settings-changed="${this._onSettingsChanged}">
+      </mrd-settings-dialog>
     `;
   }
 
   _onSettingsButtonTap() {
     this.getById('settings-dialog').open();
+  }
+
+  _onSettingsChanged(e) {
+    localStorage.setItem('settings', e.detail);
+    this._loadSettings();
+  }
+
+  _loadSettings() {
+    const settingsString = localStorage.getItem('settings');
+    if (!settingsString) {
+      this._settings = {};
+      localStorage.setItem('settings', JSON.stringify(this._settings, null, 2));
+    } else {
+      this._settings = JSON.parse(settingsString);
+    }
   }
 
 }
