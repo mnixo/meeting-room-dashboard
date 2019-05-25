@@ -18,9 +18,7 @@ class MRDApp extends MRDElement {
 
   static get properties() {
     return {
-      _settings: {
-        type: Object,
-      },
+      _settings: Object,
     };
   }
 
@@ -40,7 +38,7 @@ class MRDApp extends MRDElement {
         <app-toolbar>
           <span main-title>Meeting Room Dashboard</span>
           <mrd-settings-button @tap="${this._onSettingsButtonTap}"></mrd-settings-button>
-          <mrd-auth></mrd-auth>
+          <mrd-auth .auth="${this._settings.auth}"></mrd-auth>
         </app-toolbar>
       </app-header>
       <mrd-settings-dialog
