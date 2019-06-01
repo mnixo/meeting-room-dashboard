@@ -73,11 +73,17 @@ class MRDAuth extends MRDElement {
   _onSignedIn() {
     this._isLoading = false;
     this._user = this.getById('calendarAPI').getCurrentUser();
+    this.dispatchEvent(new CustomEvent('user-changed', {
+      detail: this._user,
+    }));
   }
 
   _onSignedOut() {
     this._isLoading = false;
     this._user = null;
+    this.dispatchEvent(new CustomEvent('user-changed', {
+      detail: this._user,
+    }));
   }
 
   _onSigningInOrOut() {

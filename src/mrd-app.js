@@ -11,6 +11,7 @@ import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/paper-styles';
 import { MRDElement } from './mrd-element';
 import './mrd-auth';
+import './mrd-rooms';
 import './mrd-settings-button';
 import './mrd-settings-dialog';
 
@@ -18,12 +19,14 @@ class MRDApp extends MRDElement {
 
   static get properties() {
     return {
+      _user: Object,
       _settings: Object,
     };
   }
 
   constructor() {
     super();
+    this._user = null;
     this._loadSettings();
   }
 
@@ -38,13 +41,20 @@ class MRDApp extends MRDElement {
         <app-toolbar>
           <span main-title>Meeting Room Dashboard</span>
           <mrd-settings-button @tap="${this._onSettingsButtonTap}"></mrd-settings-button>
-          <mrd-auth .auth="${this._settings.auth}"></mrd-auth>
+          <mrd-auth
+            .auth="${this._settings.auth}"
+            @user-changed="${this._onUserChanged}">
+          </mrd-auth>
         </app-toolbar>
       </app-header>
       <mrd-settings-dialog
         id="settings-dialog"
         @settings-changed="${this._onSettingsChanged}">
       </mrd-settings-dialog>
+      <mrd-rooms
+        .user="${this._user}"
+        .settings="${this._settings}">
+      </mrd-rooms>
     `;
   }
 
@@ -55,6 +65,10 @@ class MRDApp extends MRDElement {
   _onSettingsChanged(e) {
     localStorage.setItem('settings', e.detail);
     this._loadSettings();
+  }
+
+  _onUserChanged(e) {
+    this._user = e.detail;
   }
 
   _loadSettings() {
