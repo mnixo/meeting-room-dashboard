@@ -6,13 +6,22 @@
   "author": "Miguel Nixo <mnixo@nuxeo.com>",
   "license": "MIT",
   "scripts": {
-    "start": "./node_modules/polymer-cli/bin/polymer.js serve"
+    "start": "./node_modules/polymer-cli/bin/polymer.js serve",
+    "build": "webpack",
+    "watch": "webpack --watch",
+    "clean": "rm -rf dist"
   },
   "devDependencies": {
     "@webcomponents/webcomponentsjs": "^2.2.10",
-    "polymer-cli": "^1.9.9"
+    "polymer-cli": "^1.9.9",
+    "webpack": "^4.37.0",
+    "webpack-cli": "^3.3.6"
   },
   "dependencies": {
+    "@fullcalendar/core": "^4.2.0",
+    "@fullcalendar/daygrid": "^4.2.0",
+    "@fullcalendar/list": "^4.2.0",
+    "@fullcalendar/timegrid": "^4.2.0",
     "@polymer/app-layout": "^3.0.2",
     "@polymer/iron-icon": "^3.0.1",
     "@polymer/iron-icons": "^3.0.1",
