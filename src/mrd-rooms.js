@@ -1,6 +1,5 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
-import './mrd-room';
 
 class MRDRooms extends MRDElement {
 
@@ -20,9 +19,7 @@ class MRDRooms extends MRDElement {
   }
 
   render() {
-    return html`
-      <mrd-room></mrd-room>
-    `;
+    return html``;
   }
 
   updated(_changedProperties) {
