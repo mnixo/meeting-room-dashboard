@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
+import './mrd-timer';
 
 class MRDRooms extends MRDElement {
 
@@ -7,7 +8,6 @@ class MRDRooms extends MRDElement {
     return {
       user: Object,
       settings: Object,
-      _interval: Object,
     };
   }
 
@@ -15,25 +15,19 @@ class MRDRooms extends MRDElement {
     super();
     this.user = null;
     this.settings = null;
-    this._interval = null;
   }
 
   render() {
-    return html``;
+    return html`
+      <mrd-timer
+        .settings="${this.settings}"
+        .user="${this.user}"
+        @trigger="${this._onTimerTrigger}">
+      </mrd-timer>
+    `;
   }
 
-  updated(_changedProperties) {
-    if (_changedProperties.has('user') || _changedProperties.has('settings')) {
-      clearInterval(this._interval);
-      this._interval = null;
-      if (this.user && this.settings.auth && this.settings.interval) {
-        this._intervalFunction();
-        this._interval = setInterval(this._intervalFunction, this.settings.interval);
-      }
-    }
-  }
-
-  _intervalFunction() {
+  _onTimerTrigger() {
     console.log('update rooms');
   }
 
