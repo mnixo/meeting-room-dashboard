@@ -28,6 +28,16 @@ class MRDRooms extends MRDElement {
 
   render() {
     return html`
+      <style>
+        :host {
+          display: flex;
+          flex-direction: column;
+          padding: 0.5em;
+        }
+        mrd-room {
+          margin-bottom: 0.5em;
+        }
+      </style>
       <mrd-timer
         .settings="${this.settings}"
         .user="${this.user}"
