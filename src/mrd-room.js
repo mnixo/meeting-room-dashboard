@@ -21,9 +21,18 @@ class MRDRoom extends MRDElement {
 
   render() {
     return html`
-      <div>${this.calendar.label}</div>
-      <div>${this._state}</div>
-      <div>${this._message}</div>
+      <style>
+        paper-card {
+          display: flex;
+          flex-direction: column;
+          padding: 0.5em;
+        }
+      </style>
+      <paper-card>
+        <div>${this.calendar.label}</div>
+        <div>${this._state}</div>
+        <div>${this._message}</div>
+      </paper-card>
     `;
   }
 

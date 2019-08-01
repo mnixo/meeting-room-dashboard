@@ -5,6 +5,7 @@ import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/iron-image/iron-image';
 import '@polymer/paper-button/paper-button';
+import '@polymer/paper-card/paper-card';
 import '@polymer/paper-dialog/paper-dialog';
 import '@polymer/paper-input/paper-input';
 import '@polymer/paper-spinner/paper-spinner';
