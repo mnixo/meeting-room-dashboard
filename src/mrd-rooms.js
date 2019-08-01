@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
+import './mrd-room';
 import './mrd-timer';
 
 class MRDRooms extends MRDElement {
@@ -8,6 +9,7 @@ class MRDRooms extends MRDElement {
     return {
       user: Object,
       settings: Object,
+      _calendars: Array,
     };
   }
 
@@ -15,6 +17,13 @@ class MRDRooms extends MRDElement {
     super();
     this.user = null;
     this.settings = null;
+    this._calendars = [];
+  }
+
+  updated(_changedProperties) {
+    if (_changedProperties.has('settings')) {
+      this._calendars = (this.settings && this.settings.calendars) ? [...this.settings.calendars] : [];
+    }
   }
 
   render() {
@@ -24,11 +33,22 @@ class MRDRooms extends MRDElement {
         .user="${this.user}"
         @trigger="${this._onTimerTrigger}">
       </mrd-timer>
+      ${this._renderCalendars(this._calendars)}
     `;
   }
 
+  _renderCalendars(calendars) {
+    return calendars.map(calendar => {
+      return html`
+        <mrd-room
+          .calendar="${calendar}">
+        </mrd-room>
+      `;
+    });
+  }
+
   _onTimerTrigger() {
-    console.log('update rooms');
+    this.getByTagName('mrd-room').forEach(room => room.triggerUpdate());
   }
 
 }
