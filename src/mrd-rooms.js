@@ -34,7 +34,7 @@ class MRDRooms extends MRDElement {
           flex-direction: column;
           padding: 0.5em;
         }
-        mrd-room {
+        mrd-room:not(:last-child) {
           margin-bottom: 0.5em;
         }
       </style>
