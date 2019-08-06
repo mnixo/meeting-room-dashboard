@@ -1,6 +1,4 @@
 import { html } from 'lit-element';
-import '@polymer/app-layout/app-header/app-header';
-import '@polymer/app-layout/app-toolbar/app-toolbar';
 import '@polymer/iron-icon/iron-icon';
 import '@polymer/iron-icons/iron-icons';
 import '@polymer/iron-image/iron-image';
@@ -34,20 +32,32 @@ class MRDApp extends MRDElement {
   render() {
     return html`
       <style>
-        app-header {
-          font-family: 'Roboto', 'Noto', sans-serif;
+        .header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          font-size: large;
+          padding: 0.5em;
+          z-index: 1;
+        }
+        .header-buttons {
+          display: flex;
+        }
+        mrd-rooms {
+          height: calc(100vh - 82px);
+          overflow: scroll;
         }
       </style>
-      <app-header shadow>
-        <app-toolbar>
-          <span main-title>Meeting Room Dashboard</span>
+      <paper-card class="header">
+        <span>Meeting Room Dashboard</span>
+        <div class="header-buttons">
           <mrd-settings-button @tap="${this._onSettingsButtonTap}"></mrd-settings-button>
           <mrd-auth
             .auth="${this._settings.auth}"
             @user-changed="${this._onUserChanged}">
           </mrd-auth>
-        </app-toolbar>
-      </app-header>
+        </div>
+      </paper-card>
       <mrd-settings-dialog
         id="settings-dialog"
         @settings-changed="${this._onSettingsChanged}">
