@@ -32,30 +32,36 @@ class MRDApp extends MRDElement {
   render() {
     return html`
       <style>
-        .header {
+        .header-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
           font-size: large;
           padding: 0.5em;
-          z-index: 1;
+          width: 100%;
         }
         .header-buttons {
           display: flex;
+        }
+        paper-card {
+          display: flex;
+          z-index: 1;
         }
         mrd-rooms {
           height: calc(100vh - 82px);
           overflow: scroll;
         }
       </style>
-      <paper-card class="header">
-        <span>Meeting Room Dashboard</span>
-        <div class="header-buttons">
-          <mrd-settings-button @tap="${this._onSettingsButtonTap}"></mrd-settings-button>
-          <mrd-auth
-            .auth="${this._settings.auth}"
-            @user-changed="${this._onUserChanged}">
-          </mrd-auth>
+      <paper-card>
+        <div class="header-container">
+          <span>Meeting Room Dashboard</span>
+          <div class="header-buttons">
+            <mrd-settings-button @tap="${this._onSettingsButtonTap}"></mrd-settings-button>
+            <mrd-auth
+              .auth="${this._settings.auth}"
+              @user-changed="${this._onUserChanged}">
+            </mrd-auth>
+          </div>
         </div>
       </paper-card>
       <mrd-settings-dialog
