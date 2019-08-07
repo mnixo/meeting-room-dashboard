@@ -9,6 +9,7 @@ class MRDRoomStatus extends MRDElement {
       label: String,
       // can be 'free' or 'busy', any other value will result in a default behaviour
       status: String,
+      statusMessage: String,
     };
   }
 
@@ -16,22 +17,36 @@ class MRDRoomStatus extends MRDElement {
     super();
     this.label = null;
     this.status = null;
+    this.statusMessage = null;
   }
 
   render() {
     let color;
     switch (this.status) {
       case 'free':
-        color = '#1b5e20';
+        color = '#c8e6c9';
         break;
       case 'busy':
-        color = '#b71c1c';
+        color = '#ffcdd2';
         break;
       default:
-        color = 'unset';
+        color = '#f5f5f5';
     }
     return html`
-      <span style="color: ${color};">${this.label}</span>
+      <style>
+        :host {
+          width: 100%;
+        }
+        div {
+          display: flex;
+          justify-content: space-between;
+          padding: 0.5em;
+        }
+      </style>
+      <div style="background-color: ${color};">
+        <span>${this.label}</span>
+        <span>${this.statusMessage}</span>
+      </div>
     `;
   }
 

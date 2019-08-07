@@ -28,25 +28,37 @@ class MRDRoom extends MRDElement {
     return html`
       ${MRDStyles.paperCard}
       <style>
-        .header {
+        paper-card {
+          padding: 0;
+        }
+        div {
           display: flex;
-          justify-content: space-between;
+          flex-direction: column;
+          padding: 0.5em;
+        }
+        mrd-event:not(:last-child) {
+          margin-bottom: 0.5em;
         }
       </style>
       <paper-card>
-        <div class="header">
-          <mrd-room-status
-            .label="${this.calendar.label}"
-            .status="${this._status}">            
-          </mrd-room-status>
-          <span>${this._statusMessage}</span>
+        <mrd-room-status
+          .label="${this.calendar.label}"
+          .status="${this._status}"
+          .statusMessage="${this._statusMessage}">
+        </mrd-room-status>
+        <div>
+          ${this._renderEvents(this._events)}
         </div>
-        ${this._renderEvents(this._events)}
       </paper-card>
     `;
   }
 
   _renderEvents(events) {
+    if (!events.length) {
+      return html`
+        <span>Loading events...</span>
+      `;
+    }
     return events.map(event => {
       // start date and time
       const start = moment(event.start.dateTime ? event.start.dateTime : event.start.date);
@@ -163,11 +175,11 @@ class MRDRoom extends MRDElement {
         if (consecutiveEventsStart.isSameOrBefore(moment.now())) {
           // current time is after the start of the consecutive events
           this._status = 'busy';
-          this._statusMessage = `free ${consecutiveEventsEnd.fromNow()}`;
+          this._statusMessage = `Free ${consecutiveEventsEnd.fromNow()}`;
         } else {
           // current time is before the start of the consecutive events
           this._status = 'free';
-          this._statusMessage = `busy ${consecutiveEventsStart.fromNow()}`;
+          this._statusMessage = `Busy ${consecutiveEventsStart.fromNow()}`;
         }
 
         this._events = consecutiveEvents;

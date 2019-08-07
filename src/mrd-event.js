@@ -20,11 +20,6 @@ class MRDEvent extends MRDElement {
   render() {
     return html`
       ${MRDStyles.paperCard}
-      <style>
-        paper-card {
-          margin-top: 0.5em;
-        }
-      </style>
       <paper-card>
         <div>${this.summary}</div>         
         <div>${this.message}</div>
