@@ -9,6 +9,7 @@ import '@polymer/paper-input/paper-input';
 import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/paper-styles';
 import { MRDElement } from './mrd-element';
+import { MRDStyles } from './mrd-styles';
 import './mrd-auth';
 import './mrd-rooms';
 import './mrd-settings-button';
@@ -31,20 +32,19 @@ class MRDApp extends MRDElement {
 
   render() {
     return html`
+      ${MRDStyles.paperCard}
       <style>
         .header-container {
           display: flex;
           align-items: center;
           justify-content: space-between;
           font-size: large;
-          padding: 0.5em;
           width: 100%;
         }
         .header-buttons {
           display: flex;
         }
         paper-card {
-          display: flex;
           z-index: 1;
         }
         mrd-rooms {
