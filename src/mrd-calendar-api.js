@@ -1,6 +1,6 @@
 import { LitElement, html } from 'lit-element';
 
-class MrdCalendarApi extends LitElement {
+class MRDCalendarApi extends LitElement {
 
   static get properties() {
     return {
@@ -95,4 +95,4 @@ class MrdCalendarApi extends LitElement {
 
 }
 
-window.customElements.define('mrd-calendar-api', MrdCalendarApi);
+window.customElements.define('mrd-calendar-api', MRDCalendarApi);
