@@ -1,6 +1,7 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
 import moment from 'moment';
+import './mrd-event';
 
 class MRDRoom extends MRDElement {
 
@@ -93,10 +94,14 @@ class MRDRoom extends MRDElement {
       }
 
       return html`
-        <paper-card style="margin-top: 0.5em;">
+        <mrd-event
+          .summary="${event.summary}"
+          .message="${message}">
+        </mrd-event>
+        <!--paper-card style="margin-top: 0.5em;">
           <div>${event.summary}</div>         
           <div>${message}</div>
-        </paper-card>
+        </paper-card-->
       `;
     });
   }
