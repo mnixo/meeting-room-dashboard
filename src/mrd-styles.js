@@ -24,6 +24,18 @@ export class MRDStyles {
     `;
   }
 
+  static get paperCard() {
+    return html`
+      <style>
+        paper-card {
+          display: flex;
+          flex-direction: column;
+          padding: 0.5em;
+        }
+      </style>
+    `;
+  }
+
   static get paperDialog() {
     return html`
       <style>

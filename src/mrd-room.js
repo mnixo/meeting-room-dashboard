@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
+import { MRDStyles } from './mrd-styles';
 import moment from 'moment';
 import './mrd-event';
 
@@ -22,13 +23,7 @@ class MRDRoom extends MRDElement {
 
   render() {
     return html`
-      <style>
-        paper-card {
-          display: flex;
-          flex-direction: column;
-          padding: 0.5em;
-        }
-      </style>
+      ${MRDStyles.paperCard}
       <paper-card>
         <div>${this.calendar.label}</div>
         <div>${this._state}</div>
@@ -98,10 +93,6 @@ class MRDRoom extends MRDElement {
           .summary="${event.summary}"
           .message="${message}">
         </mrd-event>
-        <!--paper-card style="margin-top: 0.5em;">
-          <div>${event.summary}</div>         
-          <div>${message}</div>
-        </paper-card-->
       `;
     });
   }

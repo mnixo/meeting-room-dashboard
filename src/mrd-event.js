@@ -1,5 +1,6 @@
 import { html } from 'lit-element';
 import { MRDElement } from './mrd-element';
+import { MRDStyles } from './mrd-styles';
 
 class MRDEvent extends MRDElement {
 
@@ -18,14 +19,13 @@ class MRDEvent extends MRDElement {
 
   render() {
     return html`
+      ${MRDStyles.paperCard}
       <style>
         paper-card {
-          display: flex;
-          flex-direction: column;
-          padding: 0.5em;
+          margin-top: 0.5em;
         }
       </style>
-      <paper-card style="margin-top: 0.5em;">
+      <paper-card>
         <div>${this.summary}</div>         
         <div>${this.message}</div>
       </paper-card>
