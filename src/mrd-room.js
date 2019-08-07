@@ -3,6 +3,7 @@ import { MRDElement } from './mrd-element';
 import { MRDStyles } from './mrd-styles';
 import moment from 'moment';
 import './mrd-event';
+import './mrd-room-status';
 
 class MRDRoom extends MRDElement {
 
@@ -10,7 +11,8 @@ class MRDRoom extends MRDElement {
     return {
       calendar: Object,
       _events: Array,
-      _state: String,
+      _status: String,
+      _statusMessage: String,
     };
   }
 
@@ -18,15 +20,27 @@ class MRDRoom extends MRDElement {
     super();
     this.calendar = null;
     this._events = [];
-    this._state = null;
+    this._status = null;
+    this._statusMessage = null;
   }
 
   render() {
     return html`
       ${MRDStyles.paperCard}
+      <style>
+        .header {
+          display: flex;
+          justify-content: space-between;
+        }
+      </style>
       <paper-card>
-        <div>${this.calendar.label}</div>
-        <div>${this._state}</div>
+        <div class="header">
+          <mrd-room-status
+            .label="${this.calendar.label}"
+            .status="${this._status}">            
+          </mrd-room-status>
+          <span>${this._statusMessage}</span>
+        </div>
         ${this._renderEvents(this._events)}
       </paper-card>
     `;
@@ -148,10 +162,12 @@ class MRDRoom extends MRDElement {
 
         if (consecutiveEventsStart.isSameOrBefore(moment.now())) {
           // current time is after the start of the consecutive events
-          this._state = `Busy (free ${consecutiveEventsEnd.fromNow()})`;
+          this._status = 'busy';
+          this._statusMessage = `free ${consecutiveEventsEnd.fromNow()}`;
         } else {
           // current time is before the start of the consecutive events
-          this._state = `Free (busy ${consecutiveEventsStart.fromNow()})`;
+          this._status = 'free';
+          this._statusMessage = `busy ${consecutiveEventsStart.fromNow()}`;
         }
 
         this._events = consecutiveEvents;
