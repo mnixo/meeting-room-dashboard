@@ -42,9 +42,12 @@ class MRDRoomStatus extends MRDElement {
           justify-content: space-between;
           padding: 0.5em;
         }
+        .label {
+          font-weight: bold;
+        }
       </style>
       <div style="background-color: ${color};">
-        <span>${this.label}</span>
+        <span class="label">${this.label}</span>
         <span>${this.statusMessage}</span>
       </div>
     `;
