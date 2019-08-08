@@ -116,8 +116,9 @@ class MRDRoom extends MRDElement {
 
       return html`
         <mrd-event
-          .summary="${event.summary}"
-          .message="${message}">
+          .attendees="${event.attendees}"
+          .message="${message}"
+          .summary="${event.summary}">
         </mrd-event>
       `;
     });
