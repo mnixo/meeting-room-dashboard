@@ -31,6 +31,9 @@ class MRDEvent extends MRDElement {
           display: flex;
           justify-content: space-between;
         }
+        .summary {
+          font-weight: bold;
+        }
         .attendees {
           display: flex;
           flex-direction: column;
@@ -51,7 +54,7 @@ class MRDEvent extends MRDElement {
       </style>
       <paper-card>
         <div class="header">
-          <span>${this.summary}</span>
+          <span class="summary">${this.summary}</span>
           <span>${this.message}</span>
         </div>         
         <div class="attendees">
