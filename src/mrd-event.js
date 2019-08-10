@@ -65,6 +65,9 @@ class MRDEvent extends MRDElement {
   }
 
   _renderAttendees(attendees) {
+    if (!attendees) {
+      return;
+    }
     const resourceAttendees = attendees.filter(attendee => attendee.resource);
     const nonResourceAttendees = attendees.filter(attendee => !attendee.resource);
     return resourceAttendees.concat(nonResourceAttendees).map(attendee => {
