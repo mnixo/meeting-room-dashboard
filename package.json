@@ -6,6 +6,7 @@
   "author": "Miguel Nixo <mnixo@nuxeo.com>",
   "license": "MIT",
   "scripts": {
+    "build": "./node_modules/polymer-cli/bin/polymer.js build",
     "start": "./node_modules/polymer-cli/bin/polymer.js serve"
   },
   "devDependencies": {
