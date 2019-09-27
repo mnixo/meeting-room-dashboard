@@ -36,8 +36,13 @@ class MRDEvent extends MRDElement {
         }
         .attendees {
           display: flex;
-          flex-direction: column;
+          flex-direction: row;
+          flex-wrap: wrap;
           font-size: smaller;
+          margin-top: 1em;
+        }
+        .attendee {
+          margin-right: 1em;
         }
         .accepted {
           color: #1b5e20;
@@ -56,7 +61,10 @@ class MRDEvent extends MRDElement {
         <div class="header">
           <span class="summary">${this.summary}</span>
           <span>${this.message}</span>
-        </div>         
+        </div>
+        <div class="attendees">
+          ${this._renderResources(this.attendees)}
+        </div>
         <div class="attendees">
           ${this._renderAttendees(this.attendees)}
         </div>
@@ -64,18 +72,33 @@ class MRDEvent extends MRDElement {
     `;
   }
 
+  _renderResources(attendees) {
+    if (!attendees) {
+      return;
+    }
+    return attendees.filter(attendee => attendee.resource).map(attendee => {
+      return html`
+        <div class="attendee">
+          <iron-icon
+            class="${attendee.responseStatus}"
+            icon="room">
+          </iron-icon>
+          <span>${attendee.displayName ? attendee.displayName : attendee.email}</span>
+        </div>
+      `;
+    });
+  }
+
   _renderAttendees(attendees) {
     if (!attendees) {
       return;
     }
-    const resourceAttendees = attendees.filter(attendee => attendee.resource);
-    const nonResourceAttendees = attendees.filter(attendee => !attendee.resource);
-    return resourceAttendees.concat(nonResourceAttendees).map(attendee => {
+    return attendees.filter(attendee => !attendee.resource).map(attendee => {
       return html`
-        <div>
+        <div class="attendee">
           <iron-icon
             class="${attendee.responseStatus}"
-            icon="${attendee.resource ? 'room' : 'account-circle'}">
+            icon="account-circle">
           </iron-icon>
           <span>${attendee.displayName ? attendee.displayName : attendee.email}</span>
         </div>
