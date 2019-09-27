@@ -9,6 +9,10 @@ class MRDSettingsDialog extends MRDElement {
       ${MRDStyles.paperButton}
       ${MRDStyles.paperDialog}
       <style>
+        paper-dialog {
+          background: rgb(51,51,51);
+          color: white;
+        }
         paper-dialog > * {
           margin: 0.5em;
           padding: 0;
@@ -31,6 +35,7 @@ class MRDSettingsDialog extends MRDElement {
         }
         paper-button {
           margin-left: 1em;
+          background: rgb(69,69,69);
         }
       </style>
       <paper-dialog

@@ -46,6 +46,8 @@ class MRDApp extends MRDElement {
         }
         paper-card {
           z-index: 1;
+          color: white;
+          background: rgb(51,51,51);
         }
         mrd-rooms {
           height: calc(100vh - 82px);

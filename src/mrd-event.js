@@ -23,6 +23,9 @@ class MRDEvent extends MRDElement {
     return html`
       ${MRDStyles.paperCard}
       <style>
+        paper-card {
+          background: rgb(69,69,69);
+        }
         iron-icon {
           width: 1em;
           height: 1em;
@@ -45,13 +48,13 @@ class MRDEvent extends MRDElement {
           margin-right: 1em;
         }
         .accepted {
-          color: #1b5e20;
+          color: #4c8c4a;
         }
         .tentative {
-          color: #f57f17;
+          color: #ffb04c;
         }
         .declined {
-          color: #b71c1c;
+          color: #f05545;
         }
         .needsAction {
           color: #9e9e9e;
