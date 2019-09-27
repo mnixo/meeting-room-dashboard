@@ -15,6 +15,7 @@ export class MRDStyles {
           padding: 0.5em;
           margin-left: 0.5em;
           min-width: 0;
+          background: rgb(69,69,69);
         }
         paper-button.toolbar > * {
           height: 2em;

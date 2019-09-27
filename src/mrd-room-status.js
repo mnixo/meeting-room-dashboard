@@ -24,13 +24,13 @@ class MRDRoomStatus extends MRDElement {
     let color;
     switch (this.status) {
       case 'free':
-        color = '#c8e6c9';
+        color = '#1b5e20';
         break;
       case 'busy':
-        color = '#ffcdd2';
+        color = '#b71c1c';
         break;
       default:
-        color = '#f5f5f5';
+        color = 'rgb(69,69,69)';
     }
     return html`
       <style>

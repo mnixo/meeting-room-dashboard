@@ -30,6 +30,8 @@ class MRDRoom extends MRDElement {
       <style>
         paper-card {
           padding: 0;
+          background: rgb(51,51,51);
+          color: white;
         }
         div {
           display: flex;
