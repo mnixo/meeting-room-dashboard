@@ -16,19 +16,31 @@
     ],
     "scope": "https://www.googleapis.com/auth/calendar.readonly"
   },
-  "interval": 10000,
   "calendars": [
     {
-      "label": "Room 1",
-      "id": "[Room 1 calendar ID here]"
+      "id": "[Room 1 calendar ID here]",
+      "label": "Room 1"
     },
     {
-      "label": "Room 2",
-      "id": "[Room 2 calendar ID here]"
+      "id": "[Room 2 calendar ID here]",
+      "label": "Room 2"
     }
-  ]
+  ],
+  "interval": 10000,
+  "modelUrl": "http://example.com/model.obj",
+  "renderResources": true
 }
 ```
+
+`auth`: Object that holds the information of the Google Calendar API credentials.
+
+`calendars`: Array of objects, each with a calendar `id` (unique identifier of the Google Calendar resource) and a calendar `label` (display name for the calendar).
+
+`interval`: Number of milliseconds between each calendar update.
+
+`modelUrl`: URL to the 3D model for the 3D view. This model must be a `.obj` 3D model and to allow the proper highlighting of each room, room submodels must be identified the same labels described in the objects of the `calendars` array.
+
+`renderResources`: Boolean to indicate whether the event resources should be rendered in the event card.
 
 ### Configuring Google Calendar API credentials
 
