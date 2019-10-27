@@ -17,6 +17,7 @@ class MRD3dView extends MRDElement {
       _outlineMap: Object,
       _renderer: Object,
       _scene: Object,
+      _sceneRotation: Number,
       settings: Object,
     };
   }
@@ -24,6 +25,7 @@ class MRD3dView extends MRDElement {
   constructor() {
     super();
     this._outlineMap = {};
+    this._sceneRotation = 0;
     this.settings = null;
   }
 
@@ -104,7 +106,8 @@ class MRD3dView extends MRDElement {
 
   animate() {
     requestAnimationFrame(this.animate.bind(this));
-    this._scene.rotation.y += 0.002;
+    this._sceneRotation += 0.01;
+    this._scene.rotation.y = 0.25 * Math.sin(this._sceneRotation) + Math.PI;
     this._composer.render();
   }
 
