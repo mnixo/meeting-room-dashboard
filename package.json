@@ -24,6 +24,7 @@
     "@polymer/paper-spinner": "^3.0.2",
     "@polymer/paper-styles": "^3.0.1",
     "lit-element": "^2.1.0",
-    "moment": "^2.24.0"
+    "moment": "^2.24.0",
+    "three": "^0.109.0"
   }
 }
