@@ -10,6 +10,7 @@ class MRDRoom extends MRDElement {
   static get properties() {
     return {
       calendar: Object,
+      settings: Object,
       _events: Array,
       _status: String,
       _statusMessage: String,
@@ -19,6 +20,7 @@ class MRDRoom extends MRDElement {
   constructor() {
     super();
     this.calendar = null;
+    this.settings = null;
     this._events = [];
     this._status = null;
     this._statusMessage = null;
@@ -120,6 +122,7 @@ class MRDRoom extends MRDElement {
         <mrd-event
           .attendees="${event.attendees}"
           .message="${message}"
+          .settings="${this.settings}"
           .summary="${event.summary}">
         </mrd-event>
       `;
