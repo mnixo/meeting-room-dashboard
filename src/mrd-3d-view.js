@@ -100,18 +100,18 @@ class MRD3dView extends MRDElement {
       });
     }
 
-    window.addEventListener('resize', this.onResize.bind(this), false);
-    this.animate();
+    window.addEventListener('resize', this._onResize.bind(this), false);
+    this._animate();
   }
 
-  animate() {
-    requestAnimationFrame(this.animate.bind(this));
+  _animate() {
+    requestAnimationFrame(this._animate.bind(this));
     this._sceneRotation += 0.01;
     this._scene.rotation.y = 0.25 * Math.sin(this._sceneRotation) + Math.PI;
     this._composer.render();
   }
 
-  onResize() {
+  _onResize() {
     const canvas = this.getById('canvas');
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
