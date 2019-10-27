@@ -75,7 +75,7 @@ class MRD3dView extends MRDElement {
     this._composer.addPass(effectFXAA);
 
     // load model
-    const modelUrl = this.settings && this.settings.view3d && this.settings.view3d.modelUrl;
+    const modelUrl = this.settings && this.settings.modelUrl;
     if (modelUrl) {
       const loader = new OBJLoader(new THREE.LoadingManager());
       loader.load(modelUrl, model => {
