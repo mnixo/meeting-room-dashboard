@@ -51,7 +51,8 @@ class MRDRooms extends MRDElement {
     return calendars.map(calendar => {
       return html`
         <mrd-room
-          .calendar="${calendar}">
+          .calendar="${calendar}"
+          .settings="${this.settings}">
         </mrd-room>
       `;
     });

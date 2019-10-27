@@ -8,6 +8,7 @@ class MRDEvent extends MRDElement {
     return {
       attendees: Array,
       message: String,
+      settings: Object,
       summary: String,
     };
   }
@@ -16,6 +17,7 @@ class MRDEvent extends MRDElement {
     super();
     this.attendees = [];
     this.message = null;
+    this.settings = null;
     this.summary = null;
   }
 
@@ -65,21 +67,17 @@ class MRDEvent extends MRDElement {
           <span class="summary">${this.summary}</span>
           <span>${this.message}</span>
         </div>
-        <div class="attendees">
-          ${this._renderResources(this.attendees)}
-        </div>
-        <div class="attendees">
-          ${this._renderAttendees(this.attendees)}
-        </div>
+        ${this._renderResources(this.attendees)}
+        ${this._renderAttendees(this.attendees)}
       </paper-card>
     `;
   }
 
   _renderResources(attendees) {
-    if (!attendees) {
+    if (!attendees || !this.settings || !this.settings.renderResources) {
       return;
     }
-    return attendees.filter(attendee => attendee.resource).map(attendee => {
+    const resourcesTemplate = attendees.filter(attendee => attendee.resource).map(attendee => {
       return html`
         <div class="attendee">
           <iron-icon
@@ -90,13 +88,18 @@ class MRDEvent extends MRDElement {
         </div>
       `;
     });
+    return html`
+      <div class="attendees">
+        ${resourcesTemplate}
+      </div>
+    `;
   }
 
   _renderAttendees(attendees) {
     if (!attendees) {
       return;
     }
-    return attendees.filter(attendee => !attendee.resource).map(attendee => {
+    const attendeesTemplate = attendees.filter(attendee => !attendee.resource).map(attendee => {
       return html`
         <div class="attendee">
           <iron-icon
@@ -107,6 +110,11 @@ class MRDEvent extends MRDElement {
         </div>
       `;
     });
+    return html`
+      <div class="attendees">
+        ${attendeesTemplate}
+      </div>
+    `;
   }
 
 }
