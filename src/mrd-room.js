@@ -145,7 +145,6 @@ class MRDRoom extends MRDElement {
       'maxResults': 10,
       'orderBy': 'startTime'
     }).then(response => {
-      console.log(response.result.items);
       if (response.result.items.length) {
 
         // list of the next consecutive events
@@ -186,6 +185,14 @@ class MRDRoom extends MRDElement {
         }
 
         this._events = consecutiveEvents;
+        this.dispatchEvent(new CustomEvent('room-updated', {
+          detail: {
+            calendar: this.calendar,
+            status: this._status,
+          },
+          bubbles: true,
+          composed: true,
+        }));
 
       }
     });

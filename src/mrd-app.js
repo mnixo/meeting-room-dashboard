@@ -10,6 +10,7 @@ import '@polymer/paper-spinner/paper-spinner';
 import '@polymer/paper-styles/paper-styles';
 import { MRDElement } from './mrd-element';
 import { MRDStyles } from './mrd-styles';
+import './mrd-3d-view';
 import './mrd-auth';
 import './mrd-rooms';
 import './mrd-settings-button';
@@ -49,9 +50,9 @@ class MRDApp extends MRDElement {
           color: white;
           background: rgb(51,51,51);
         }
-        mrd-rooms {
-          height: calc(100vh - 82px);
-          overflow: scroll;
+        mrd-3d-view {
+          display: flex;
+          height: 25vh;
         }
       </style>
       <paper-card>
@@ -70,9 +71,14 @@ class MRDApp extends MRDElement {
         id="settings-dialog"
         @settings-changed="${this._onSettingsChanged}">
       </mrd-settings-dialog>
+      <mrd-3d-view
+        id="3d-view"
+        .settings="${this._settings}">
+      </mrd-3d-view>
       <mrd-rooms
         .user="${this._user}"
-        .settings="${this._settings}">
+        .settings="${this._settings}"
+        @room-updated="${this._onRoomUpdated}">
       </mrd-rooms>
     `;
   }
@@ -88,6 +94,10 @@ class MRDApp extends MRDElement {
 
   _onUserChanged(e) {
     this._user = e.detail;
+  }
+
+  _onRoomUpdated(e) {
+    this.getById('3d-view').updateRoom(e.detail);
   }
 
   _loadSettings() {
