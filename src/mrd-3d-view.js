@@ -88,7 +88,7 @@ class MRD3dView extends MRDElement {
             const outlinePass = new OutlinePass(new THREE.Vector2(width, height), this._scene, this._camera);
             outlinePass.edgeStrength = 2;
             outlinePass.edgeGlow = 1;
-            outlinePass.pulsePeriod = 3;
+            outlinePass.pulsePeriod = 0;
             outlinePass.visibleEdgeColor.set(0x000000);
             outlinePass.hiddenEdgeColor.set(0x000000);
             outlinePass.selectedObjects = [ subModel ];
