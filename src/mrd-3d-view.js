@@ -39,6 +39,13 @@ class MRD3dView extends MRDElement {
   firstUpdated(_changedProperties) {
     super.firstUpdated(_changedProperties);
 
+    const sceneRotationX = this._getSetting('sceneRotationX', 0.65);
+    const cameraFov = this._getSetting('cameraFox', 75);
+    const cameraNear = this._getSetting('cameraNear', 0.1);
+    const cameraFar = this._getSetting('cameraFar', 1000);
+    const cameraPositionZ = this._getSetting('cameraPositionZ', 12);
+    const modelUrl = this._getSetting('modelUrl');
+
     // get canvas container element
     const canvas = this.getById('canvas');
     const width = canvas.clientWidth;
@@ -46,11 +53,11 @@ class MRD3dView extends MRDElement {
 
     // setup scene
     this._scene = new THREE.Scene();
-    this._scene.rotation.x = 0.65;
+    this._scene.rotation.x = sceneRotationX;
 
     // setup camera
-    this._camera = new THREE.PerspectiveCamera(75, width/height, 0.1, 1000);
-    this._camera.position.z = 12;
+    this._camera = new THREE.PerspectiveCamera(cameraFov, width/height, cameraNear, cameraFar);
+    this._camera.position.z = cameraPositionZ;
 
     // setup renderer
     this._renderer = new THREE.WebGLRenderer({
@@ -61,7 +68,6 @@ class MRD3dView extends MRDElement {
     canvas.appendChild(this._renderer.domElement);
 
     // load model
-    const modelUrl = this.settings && this.settings.modelUrl;
     if (modelUrl) {
       const loader = new OBJLoader(new THREE.LoadingManager());
       loader.load(modelUrl, model => {
@@ -87,9 +93,12 @@ class MRD3dView extends MRDElement {
   }
 
   _animate() {
+    const sceneRotationIncrementY = this._getSetting('sceneRotationIncrementY', 0.01);
+    const sceneRotationRatioY = this._getSetting('sceneRotationRatioY', 0.25);
+    const sceneRotationFlipY = this._getSetting('sceneRotationFlipY', true);
     requestAnimationFrame(this._animate.bind(this));
-    this._sceneRotation += 0.01;
-    this._scene.rotation.y = 0.25 * Math.sin(this._sceneRotation) + Math.PI;
+    this._sceneRotation += sceneRotationIncrementY;
+    this._scene.rotation.y = sceneRotationRatioY * Math.sin(this._sceneRotation) + (sceneRotationFlipY ? Math.PI : 0);
     this._renderer.render(this._scene, this._camera);
   }
 
@@ -100,6 +109,12 @@ class MRD3dView extends MRDElement {
     this._camera.aspect = width / height;
     this._camera.updateProjectionMatrix();
     this._renderer.setSize(width, height);
+  }
+
+  _getSetting(id, defaultValue) {
+    const value = this.settings && this.settings[id];
+    // cannot return the default value if value is 0 or false
+    return (value || value === 0 || value === false) ? value : defaultValue;
   }
 
   updateRoom(room) {
