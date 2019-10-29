@@ -177,12 +177,17 @@ class MRDRoom extends MRDElement {
           }
         });
 
+        const almostRange = (this.settings && this.settings.almostRange) || 15;
         if (consecutiveEventsStart.isSameOrBefore(moment.now())) {
-          // current time is after the start of the consecutive events
+          // current time is after the start of the consecutive events (busy period)
           this._status = 'busy';
           this._statusMessage = `Free ${consecutiveEventsEnd.fromNow()}`;
+        } else if (consecutiveEventsStart.isSameOrBefore(moment().add(almostRange, 'minutes'))) {
+          // current time is after the X minutes before the start of the consecutive events (almost period)
+          this._status = 'almost';
+          this._statusMessage = `Busy ${consecutiveEventsStart.fromNow()}`;
         } else {
-          // current time is before the start of the consecutive events
+          // current time is before the busy and almost periods (free period)
           this._status = 'free';
           this._statusMessage = `Busy ${consecutiveEventsStart.fromNow()}`;
         }

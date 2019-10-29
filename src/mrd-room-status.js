@@ -26,6 +26,9 @@ class MRDRoomStatus extends MRDElement {
       case 'free':
         color = '#1b5e20';
         break;
+      case 'almost':
+        color = '#e65100';
+        break;
       case 'busy':
         color = '#b71c1c';
         break;
