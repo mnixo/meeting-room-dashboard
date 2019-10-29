@@ -108,7 +108,21 @@ class MRD3dView extends MRDElement {
     if (!roomMesh) {
       return;
     }
-    roomMesh.material.color.setHex(room.status === 'busy' ? 0xff0000 : 0x00ff00);
+    let color;
+    switch (room.status) {
+      case 'busy':
+        color = 0xb71c1c;
+        break;
+      case 'almost':
+        color = 0xe65100;
+        break;
+      case 'free':
+        color = 0x1b5e20;
+        break;
+      default:
+        color = 0xeeeeee;
+    }
+    roomMesh.material.color.setHex(color);
   }
 
 }
