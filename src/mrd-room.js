@@ -181,15 +181,15 @@ class MRDRoom extends MRDElement {
         if (consecutiveEventsStart.isSameOrBefore(moment.now())) {
           // current time is after the start of the consecutive events (busy period)
           this._status = 'busy';
-          this._statusMessage = `Free ${consecutiveEventsEnd.fromNow()}`;
+          this._statusMessage = `Busy for ${consecutiveEventsEnd.fromNow(true)}`;
         } else if (consecutiveEventsStart.isSameOrBefore(moment().add(almostRange, 'minutes'))) {
           // current time is after the X minutes before the start of the consecutive events (almost period)
           this._status = 'almost';
-          this._statusMessage = `Busy ${consecutiveEventsStart.fromNow()}`;
+          this._statusMessage = `Free for ${consecutiveEventsStart.fromNow(true)}`;
         } else {
           // current time is before the busy and almost periods (free period)
           this._status = 'free';
-          this._statusMessage = `Busy ${consecutiveEventsStart.fromNow()}`;
+          this._statusMessage = `Free for ${consecutiveEventsStart.fromNow(true)}`;
         }
 
         this._events = consecutiveEvents;
