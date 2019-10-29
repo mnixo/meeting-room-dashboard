@@ -52,7 +52,7 @@ class MRDApp extends MRDElement {
         }
         mrd-3d-view {
           display: flex;
-          height: 25vh;
+          height: ${(this._settings && this._settings.modelHeight) ? this._settings.modelHeight : '25vh'};
         }
       </style>
       <paper-card>
