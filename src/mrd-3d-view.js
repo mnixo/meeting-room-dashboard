@@ -66,8 +66,10 @@ class MRD3dView extends MRDElement {
       const loader = new OBJLoader(new THREE.LoadingManager());
       loader.load(modelUrl, model => {
         model.traverse(subModel => {
-          if (subModel instanceof THREE.Mesh) {
-            const geometry = new THREE.EdgesGeometry(subModel.geometry);
+          const isMesh = subModel instanceof THREE.Mesh;
+          const isLines = subModel instanceof THREE.LineSegments;
+          if (isMesh || isLines) {
+            const geometry = isLines ? subModel.geometry : new THREE.EdgesGeometry(subModel.geometry);
             const material = new THREE.LineBasicMaterial({
               color: 0xeeeeee,
               opacity: 1.0,
