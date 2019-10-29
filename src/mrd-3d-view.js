@@ -77,7 +77,7 @@ class MRD3dView extends MRDElement {
           if (isMesh || isLines) {
             const geometry = isLines ? subModel.geometry : new THREE.EdgesGeometry(subModel.geometry);
             const material = new THREE.LineBasicMaterial({
-              color: 0xeeeeee,
+              color: 0x454545,
               opacity: 1.0,
             });
             const mesh = new THREE.LineSegments(geometry, material);
@@ -135,7 +135,7 @@ class MRD3dView extends MRDElement {
         color = 0x1b5e20;
         break;
       default:
-        color = 0xeeeeee;
+        color = 0x454545;
     }
     roomMesh.material.color.setHex(color);
   }

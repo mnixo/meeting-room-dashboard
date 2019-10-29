@@ -33,7 +33,7 @@ class MRDRoomStatus extends MRDElement {
         color = '#b71c1c';
         break;
       default:
-        color = 'rgb(69,69,69)';
+        color = '#454545';
     }
     return html`
       <style>
