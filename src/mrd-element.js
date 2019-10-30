@@ -11,11 +11,11 @@ const defaultValues = {
   // room status colors
   colorDefault: '#454545',
   colorFree: '#1b5e20',
-  colorAlmost: '#e65100',
+  colorAlmost: '#c6a700',
   colorBusy: '#b71c1c',
   // 3D view room status colors
   colorViewFree: '#4c8c4a',
-  colorViewAlmost: '#ff833a',
+  colorViewAlmost: '#fdd835',
   colorViewBusy: '#f05545',
   // 3D view scene
   sceneRotationX: 0.65,
