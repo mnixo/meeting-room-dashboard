@@ -7,6 +7,7 @@ class MRDRoomStatus extends MRDElement {
     return {
       // text that is shown in different colors depending on the value of status
       label: String,
+      settings: Object,
       // can be 'free' or 'busy', any other value will result in a default behaviour
       status: String,
       statusMessage: String,
@@ -16,6 +17,7 @@ class MRDRoomStatus extends MRDElement {
   constructor() {
     super();
     this.label = null;
+    this.settings = null;
     this.status = null;
     this.statusMessage = null;
   }
@@ -24,16 +26,16 @@ class MRDRoomStatus extends MRDElement {
     let color;
     switch (this.status) {
       case 'free':
-        color = '#1b5e20';
+        color = (this.settings && this.settings.colorFree) ? this.settings.colorFree : '#1b5e20';
         break;
       case 'almost':
-        color = '#e65100';
+        color = (this.settings && this.settings.colorAlmost) ? this.settings.colorAlmost : '#e65100';
         break;
       case 'busy':
-        color = '#b71c1c';
+        color = (this.settings && this.settings.colorBusy) ? this.settings.colorBusy : '#b71c1c';
         break;
       default:
-        color = '#454545';
+        color = (this.settings && this.settings.colorDefault) ? this.settings.colorDefault : '#454545';
     }
     return html`
       <style>

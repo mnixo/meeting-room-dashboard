@@ -47,6 +47,7 @@ class MRDRoom extends MRDElement {
       <paper-card>
         <mrd-room-status
           .label="${this.calendar.label}"
+          .settings="${this.settings}"
           .status="${this._status}"
           .statusMessage="${this._statusMessage}">
         </mrd-room-status>
