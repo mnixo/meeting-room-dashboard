@@ -77,7 +77,7 @@ class MRD3dView extends MRDElement {
           if (isMesh || isLines) {
             const geometry = isLines ? subModel.geometry : new THREE.EdgesGeometry(subModel.geometry);
             const material = new THREE.LineBasicMaterial({
-              color: 0x454545,
+              color: new THREE.Color(this._getSetting('colorDefault', '#454545')),
               opacity: 1.0,
             });
             const mesh = new THREE.LineSegments(geometry, material);
@@ -123,21 +123,21 @@ class MRD3dView extends MRDElement {
     if (!roomMesh) {
       return;
     }
-    let color;
+    let colorHex;
     switch (room.status) {
       case 'busy':
-        color = 0xb71c1c;
+        colorHex = this._getSetting('colorViewBusy', '#f05545');
         break;
       case 'almost':
-        color = 0xe65100;
+        colorHex = this._getSetting('colorViewAlmost', '#ff833a');
         break;
       case 'free':
-        color = 0x1b5e20;
+        colorHex = this._getSetting('colorViewFree', '#4c8c4a');
         break;
       default:
-        color = 0x454545;
+        colorHex = this._getSetting('colorDefault', '#454545');
     }
-    roomMesh.material.color.setHex(color);
+    roomMesh.material.color = new THREE.Color(colorHex);
   }
 
 }
