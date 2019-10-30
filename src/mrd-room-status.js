@@ -26,16 +26,16 @@ class MRDRoomStatus extends MRDElement {
     let color;
     switch (this.status) {
       case 'free':
-        color = (this.settings && this.settings.colorFree) ? this.settings.colorFree : '#1b5e20';
+        color = this.getSetting('colorFree');
         break;
       case 'almost':
-        color = (this.settings && this.settings.colorAlmost) ? this.settings.colorAlmost : '#e65100';
+        color = this.getSetting('colorAlmost');
         break;
       case 'busy':
-        color = (this.settings && this.settings.colorBusy) ? this.settings.colorBusy : '#b71c1c';
+        color = this.getSetting('colorBusy');
         break;
       default:
-        color = (this.settings && this.settings.colorDefault) ? this.settings.colorDefault : '#454545';
+        color = this.getSetting('colorDefault');
     }
     return html`
       <style>

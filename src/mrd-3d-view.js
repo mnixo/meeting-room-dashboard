@@ -39,13 +39,6 @@ class MRD3dView extends MRDElement {
   firstUpdated(_changedProperties) {
     super.firstUpdated(_changedProperties);
 
-    const sceneRotationX = this._getSetting('sceneRotationX', 0.65);
-    const cameraFov = this._getSetting('cameraFox', 75);
-    const cameraNear = this._getSetting('cameraNear', 0.1);
-    const cameraFar = this._getSetting('cameraFar', 1000);
-    const cameraPositionZ = this._getSetting('cameraPositionZ', 12);
-    const modelUrl = this._getSetting('modelUrl');
-
     // get canvas container element
     const canvas = this.getById('canvas');
     const width = canvas.clientWidth;
@@ -53,11 +46,14 @@ class MRD3dView extends MRDElement {
 
     // setup scene
     this._scene = new THREE.Scene();
-    this._scene.rotation.x = sceneRotationX;
+    this._scene.rotation.x = this.getSetting('sceneRotationX');
 
     // setup camera
+    const cameraFov = this.getSetting('cameraFox');
+    const cameraNear = this.getSetting('cameraNear');
+    const cameraFar = this.getSetting('cameraFar');
     this._camera = new THREE.PerspectiveCamera(cameraFov, width/height, cameraNear, cameraFar);
-    this._camera.position.z = cameraPositionZ;
+    this._camera.position.z = this.getSetting('cameraPositionZ');
 
     // setup renderer
     this._renderer = new THREE.WebGLRenderer({
@@ -68,6 +64,7 @@ class MRD3dView extends MRDElement {
     canvas.appendChild(this._renderer.domElement);
 
     // load model
+    const modelUrl = this.getSetting('modelUrl');
     if (modelUrl) {
       const loader = new OBJLoader(new THREE.LoadingManager());
       loader.load(modelUrl, model => {
@@ -77,7 +74,7 @@ class MRD3dView extends MRDElement {
           if (isMesh || isLines) {
             const geometry = isLines ? subModel.geometry : new THREE.EdgesGeometry(subModel.geometry);
             const material = new THREE.LineBasicMaterial({
-              color: new THREE.Color(this._getSetting('colorDefault', '#454545')),
+              color: new THREE.Color(this.getSetting('colorDefault')),
               opacity: 1.0,
             });
             const mesh = new THREE.LineSegments(geometry, material);
@@ -93,11 +90,10 @@ class MRD3dView extends MRDElement {
   }
 
   _animate() {
-    const sceneRotationIncrementY = this._getSetting('sceneRotationIncrementY', 0.01);
-    const sceneRotationRatioY = this._getSetting('sceneRotationRatioY', 0.25);
-    const sceneRotationFlipY = this._getSetting('sceneRotationFlipY', true);
     requestAnimationFrame(this._animate.bind(this));
-    this._sceneRotation += sceneRotationIncrementY;
+    this._sceneRotation += this.getSetting('sceneRotationIncrementY');
+    const sceneRotationRatioY = this.getSetting('sceneRotationRatioY');
+    const sceneRotationFlipY = this.getSetting('sceneRotationFlipY');
     this._scene.rotation.y = sceneRotationRatioY * Math.sin(this._sceneRotation) + (sceneRotationFlipY ? Math.PI : 0);
     this._renderer.render(this._scene, this._camera);
   }
@@ -111,12 +107,6 @@ class MRD3dView extends MRDElement {
     this._renderer.setSize(width, height);
   }
 
-  _getSetting(id, defaultValue) {
-    const value = this.settings && this.settings[id];
-    // cannot return the default value if value is 0 or false
-    return (value || value === 0 || value === false) ? value : defaultValue;
-  }
-
   updateRoom(room) {
     console.log(room);
     const roomMesh = this._roomMap[room.calendar.label];
@@ -126,16 +116,16 @@ class MRD3dView extends MRDElement {
     let colorHex;
     switch (room.status) {
       case 'busy':
-        colorHex = this._getSetting('colorViewBusy', '#f05545');
+        colorHex = this.getSetting('colorViewBusy');
         break;
       case 'almost':
-        colorHex = this._getSetting('colorViewAlmost', '#ff833a');
+        colorHex = this.getSetting('colorViewAlmost');
         break;
       case 'free':
-        colorHex = this._getSetting('colorViewFree', '#4c8c4a');
+        colorHex = this.getSetting('colorViewFree');
         break;
       default:
-        colorHex = this._getSetting('colorDefault', '#454545');
+        colorHex = this.getSetting('colorDefault');
     }
     roomMesh.material.color = new THREE.Color(colorHex);
   }
